@@ -1,0 +1,11 @@
+:Author: nannakaroliina
+:Email: nanna.setamaa@gmail.com
+:Date: 10/11/2021
+:Revision: version#
+:License: Public Domain
+
+= Project: Smart Garden
+
+Smart garden project to measure the moisture, light, humidity and temperature levels of the plant.
+ 
+
