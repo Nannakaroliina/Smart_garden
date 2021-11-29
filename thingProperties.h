@@ -16,6 +16,7 @@ float humidity;
 int light;
 int moisture;
 float temperature;
+String plant_report;
 
 void initProperties(){
 
@@ -25,6 +26,7 @@ void initProperties(){
   ArduinoCloud.addProperty(light, READ, ON_CHANGE, NULL);
   ArduinoCloud.addProperty(moisture, READ, ON_CHANGE, NULL);
   ArduinoCloud.addProperty(temperature, READ, ON_CHANGE, NULL);
+  ArduinoCloud.addProperty(plant_report, READ, ON_CHANGE, NULL);
 
 }
 
