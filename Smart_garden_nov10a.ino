@@ -1,6 +1,8 @@
 #include "arduino_secrets.h"
 #include "thingProperties.h"
 #include <Arduino_MKRIoTCarrier.h>
+#include <Pushsafer.h>
+#include <WiFiClient.h>
 MKRIoTCarrier carrier;
 
 int moistPin = A5;
@@ -8,6 +10,11 @@ String lightState;
 
 uint32_t lightsOn = carrier.leds.Color(82, 118, 115);
 uint32_t lightsOff = carrier.leds.Color(0, 0, 0);
+
+char PushsaferKey[] = SECRET_KEY;
+
+WiFiClient client;
+Pushsafer pushsafer(PushsaferKey, client);
 
 void setup() {
   Serial.begin(9600);
@@ -147,33 +154,58 @@ void setupStartScreen() {
 }
 
 void checkConditions() {
-  if (moisture >= 60) {
-    plant_report = "Water the plant.";
-    carrier.display.fillScreen(ST77XX_BLACK);
-    carrier.display.setTextColor(ST77XX_WHITE);
-    carrier.display.setTextSize(2);
-
-    carrier.display.setCursor(40, 110);
-    carrier.display.print(plant_report);
+  if (moisture < 20) {
+    plant_report = "Give me water.";
+    pushMessage(plant_report);
     
   } else if (temperature < 16) {
     plant_report = "It's too cold.";
+    pushMessage(plant_report);
     
   } else if (temperature > 30) {
     plant_report = "It's too hot.";
+    pushMessage(plant_report);
     
-  } else if (light >= 300) {
+  } else if (light >= 200) {
     plant_report = "Too much light.";
+    pushMessage(plant_report);
     
-  } else if (light <= 50) {
-    plant_report = "Not enough light.";
+  } else if (light < 10) {
+    plant_report = "Give me light.";
+    pushMessage(plant_report);
     
-  } else if (humidity < 30) {
+  } else if (humidity < 15) {
     plant_report = "Not humid enough.";
+    pushMessage(plant_report);
     
   } else {
     plant_report = "Plant is doing fine!";
   }
+  
+}
+
+void pushMessage(String message) {
+  struct PushSaferInput input;
+  input.title = "Hey there!";
+  input.message = message;
+  input.sound = "";
+  input.vibration = "1";
+  input.icon = "1";
+  input.iconcolor = "#FFCCCC";
+  input.priority = "1";
+  input.device = "a";
+  input.url = "";
+  input.urlTitle = "";
+  input.picture = "";
+  input.picture2 = "";
+  input.picture3 = "";
+  input.time2live = "";
+  input.retry = "";
+  input.expire = "";
+  input.answer = "";
+  
+  Serial.println(pushsafer.sendEvent(input));
+  Serial.println("Sent");
 }
 
 

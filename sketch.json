@@ -1,10 +1,14 @@
 {
   "cpu": {
     "fqbn": "arduino:samd:mkrwifi1010",
-    "name": "Arduino MKR WiFi 1010",
-    "type": "serial"
+    "name": "Becki - Arduino MKR WiFi 1010",
+    "type": "cloud"
   },
   "secrets": [
+    {
+      "name": "SECRET_KEY",
+      "value": ""
+    },
     {
       "name": "SECRET_SSID",
       "value": ""
