@@ -7,5 +7,6 @@
 = Project: Smart Garden
 
 Smart garden project to measure the moisture, light, humidity and temperature levels of the plant.
+Notifications of the plant state are sent through the PushSafer which requires manual installation of the library to Arduino IoT Cloud
  
 
